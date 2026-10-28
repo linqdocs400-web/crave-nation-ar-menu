@@ -17,6 +17,9 @@ const CROP_SOURCE: Record<string, string> = {
   nuggets: '/images/nuggets-fries-dips.jpg',
   menu: '/images/menu.jpg',
   wrap: '/images/chicken-wrap.jpg',
+  cutNuggets: '/images/cutouts/nuggets.png',
+  cutFries: '/images/cutouts/fries.png',
+  cutDips: '/images/cutouts/dips.png',
 };
 
 const texCache = new Map<string, Promise<THREE.Texture>>();
@@ -51,6 +54,7 @@ async function makeCutoutTexture(
   );
 
   // rounded-corner alpha mask (slightly feathered)
+  if (rounded > 0) {
   const maskCanvas = document.createElement('canvas');
   maskCanvas.width = cw;
   maskCanvas.height = ch;
@@ -64,6 +68,7 @@ async function makeCutoutTexture(
   ctx.globalCompositeOperation = 'destination-in';
   ctx.drawImage(maskCanvas, 0, 0);
   ctx.restore();
+  }
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
@@ -77,7 +82,13 @@ function cachedCutout(dish: Dish) {
   const key = `${crop.image}:${dish.id}`;
   let p = texCache.get(key);
   if (!p) {
-    p = makeCutoutTexture(CROP_SOURCE[crop.image], crop, dish.featured ? 0.07 : 0.5);
+    // .png sources already carry their own alpha (background-removed) — no
+    // rounded-corner mask on top of them
+    p = makeCutoutTexture(
+      CROP_SOURCE[crop.image],
+      crop,
+      crop.image === 'menu' || crop.image === 'nuggets' ? (dish.featured ? 0.07 : 0.5) : 0
+    );
     texCache.set(key, p);
   }
   return p;

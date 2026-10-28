@@ -43,7 +43,7 @@ export interface Dish {
   /** crop of the supplied photography used for the AR visual */
   crop?: {
     /** source image, defaults to the chicken nuggets photo */
-    image: 'nuggets' | 'menu' | 'wrap';
+    image: 'nuggets' | 'menu' | 'wrap' | 'cutNuggets' | 'cutFries' | 'cutDips';
     x: number;
     y: number;
     w: number;
@@ -105,7 +105,7 @@ export const DISHES: Dish[] = [
     category: 'Chicken Snacks',
     priceLabel: 'Regular ₹140 · Large ₹250',
     region: chickenCell(3),
-    crop: { image: 'nuggets', x: 0.085, y: 0.16, w: 0.44, h: 0.64 },
+    crop: { image: 'cutNuggets', x: 0, y: 0, w: 1, h: 1 },
     caloriesEstimate: 280,
     calories: { kcal: 450, carbs: 45, fat: 22 },
     noPalmOil: true,
@@ -186,7 +186,7 @@ export const DISHES: Dish[] = [
     category: 'Veg Snacks',
     priceLabel: 'Regular ₹100 · Large ₹150',
     region: vegCell(0),
-    crop: { image: 'menu', x: 0.04, y: 0.634, w: 0.17, h: 0.058 },
+    crop: { image: 'cutFries', x: 0, y: 0, w: 1, h: 1 },
     caloriesEstimate: 200,
     calories: { kcal: 310, carbs: 48, fat: 11 },
     noPalmOil: true,
@@ -238,7 +238,7 @@ export const DISHES: Dish[] = [
     category: 'Wraps',
     priceLabel: '₹130 (as printed)',
     region: { x: 0.644, y: 0.222, w: 0.34, h: 0.062 },
-    crop: { image: 'wrap', x: 0.05, y: 0.16, w: 0.62, h: 0.68 },
+    crop: { image: 'wrap', x: 0, y: 0, w: 1, h: 1 },
     caloriesEstimate: 310,
     calories: { kcal: 380, carbs: 42, fat: 16 },
     shortDesc: 'Grilled chicken, soft tortilla',
@@ -344,5 +344,8 @@ export const IMAGE_PATHS = {
   cafeDay: '/images/cafe-day.jpg',
   nuggets: '/images/nuggets-fries-dips.jpg',
   wrap: '/images/chicken-wrap.jpg',
+  cutNuggets: '/images/cutouts/nuggets.png',
+  cutFries: '/images/cutouts/fries.png',
+  cutDips: '/images/cutouts/dips.png',
   target: '/targets/menu.mind',
 };

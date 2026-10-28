@@ -40,7 +40,13 @@ export function DishExperienceSheet({
         ? IMAGE_PATHS.nuggets
         : dish.crop.image === 'wrap'
           ? IMAGE_PATHS.wrap
-          : IMAGE_PATHS.menu;
+          : dish.crop.image === 'cutNuggets'
+            ? IMAGE_PATHS.cutNuggets
+            : dish.crop.image === 'cutFries'
+              ? IMAGE_PATHS.cutFries
+              : dish.crop.image === 'cutDips'
+                ? IMAGE_PATHS.cutDips
+                : IMAGE_PATHS.menu;
     const { x, y, w, h } = dish.crop;
     foodStyle = {
       backgroundImage: `url(${url})`,

@@ -232,11 +232,13 @@ export function ArScreen({ onExit, onFallback }: { onExit: () => void; onFallbac
         </span>
         {!dish && (
           <div className="hud-actions">
-            <button className="btn-hud" onClick={() => setCalibrate((c) => !c)}>
-              {calibrate ? 'Exit calibrate' : '⚙ Calibrate'}
-            </button>
+            {!dish && (
+              <button className="btn-hud" onClick={() => setCalibrate((c) => !c)}>
+                {calibrate ? 'Exit calibrate' : '⚙ Calibrate'}
+              </button>
+            )}
             <button className="btn-hud" onClick={() => setListOpen((o) => !o)}>
-              ☰ Dishes
+              ☰ Another dish
             </button>
             <button className="btn-hud" onClick={onExit}>
               ✕ Exit
@@ -315,7 +317,7 @@ export function ArScreen({ onExit, onFallback }: { onExit: () => void; onFallbac
         />
       )}
 
-      {listOpen && !dish && (
+      {listOpen && (
         <div className="dish-list-panel">
           <div className="dish-list-head">
             <strong>All dishes — demo</strong>
