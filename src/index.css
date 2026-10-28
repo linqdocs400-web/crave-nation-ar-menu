@@ -193,106 +193,269 @@ img { max-width: 100%; }
   font-size: 11.5px; color: var(--cream);
 }
 
-/* ============ dish sheet & floating boards ============ */
+/* ============ dish sheet ============ */
 .dish-sheet { position: absolute; inset: 0; z-index: 20; pointer-events: none; }
-.dish-topbar {
-  position: absolute; top: calc(46px + var(--safe-top)); left: 12px; right: 12px;
-  display: flex; align-items: center; gap: 10px;
-  animation: slideDown 0.4s cubic-bezier(0.2, 1.2, 0.4, 1) both;
+.dish-sheet .btn-close {
+  position: absolute; top: calc(12px + var(--safe-top)); right: 12px; z-index: 50;
+  pointer-events: auto; animation: popIn 0.35s 0.1s both;
+  background: rgba(10, 28, 51, 0.75); border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px); font-size: 15px;
 }
-.dish-sheet-demo .dish-topbar { position: fixed; top: calc(8px + var(--safe-top)); left: 12px; right: 12px; }
-.dish-titlebox {
-  flex: 1; min-width: 0;
-  background: linear-gradient(120deg, rgba(14, 36, 64, 0.92), rgba(27, 66, 101, 0.88));
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 16px; padding: 9px 14px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+.price-chip {
+  position: absolute; top: 15%; left: 54%; z-index: 2;
+  font-size: clamp(11px, 3vw, 14px); font-weight: 800; color: #8a46d9;
+  background: #ffe9a8; padding: 3px 12px; border-radius: 999px;
+  border: 2px solid #8a46d9; transform: rotate(-2deg);
+  animation: popIn 0.4s 0.5s both;
 }
-.dish-name { display: block; font-size: 15.5px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.dish-price { display: block; font-size: 11px; color: var(--lime); font-weight: 600; }
-.dish-topbar .btn-close { pointer-events: auto; animation: popIn 0.35s 0.15s both; }
 
-.boards-anchor { position: absolute; }
-.board {
+.boards-anchor { position: absolute; transform: translate(-50%, -46%); }
+.dishboard-comp {
+  position: relative;
+  width: min(92vw, 540px);
+  aspect-ratio: 0.98;
+  font-family: var(--font);
+}
+
+/* title — purple bubble letters with dark outline */
+.title-bubble {
+  position: absolute; top: 2.5%; left: 4%; right: 4%;
+  text-align: center; z-index: 3;
+}
+.title-bubble span {
+  display: inline;
+  font-family: 'Caprasimo', var(--font);
+  font-size: clamp(27px, 7.4vw, 54px);
+  line-height: 1.04;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #c678f2;
+  -webkit-text-stroke: 2.5px #221440;
+  paint-order: stroke fill;
+  text-shadow: 0 4px 0 rgba(34, 20, 64, 0.35);
+  animation: titleBounceIn 0.55s cubic-bezier(0.2, 1.4, 0.35, 1) both;
+}
+@keyframes titleBounceIn {
+  0% { opacity: 0; transform: scale(0.4) translateY(24px); }
+  70% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* generic fact-card entrance + gentle float */
+.boardx {
   position: absolute;
-  pointer-events: none;
-  border-radius: 16px;
-  padding: 10px 13px;
-  font-size: 11px;
-  line-height: 1.45;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.38);
   animation: popIn 0.5s cubic-bezier(0.2, 1.4, 0.35, 1) both;
 }
-.board-sample-tag {
-  position: absolute; top: -8px; right: 10px;
-  font-size: 8.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700;
-  padding: 2px 7px; border-radius: 999px;
-  background: rgba(10, 28, 51, 0.85); color: #ffd76e;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.card-serves, .card-nopalm, .card-desc, .bubble-tagline, .calorie-sign {
+  animation-fill-mode: both;
 }
-.board p { margin: 4px 0 0; }
+@keyframes floatTick {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
 
-.board-review {
-  width: min(300px, 62vw);
-  top: -150px; left: -110px;
+/* blue serves card */
+.card-serves {
+  left: 0; top: 22%;
+  width: 27%; max-width: 150px;
+  background: #1656b8; color: #fff;
+  padding: 10% 3% 16%;
+  aspect-ratio: 1.55;
+  display: flex; flex-direction: column; justify-content: center; gap: 6%;
+  transform: rotate(-1.5deg);
+  animation-delay: 0.25s;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+}
+.card-serves .fact-big {
+  font-size: clamp(14px, 3.6vw, 24px);
+  font-weight: 600;
+}
+.card-serves .fact-icons { font-size: clamp(11px, 2.6vw, 17px); }
+
+/* red no-palm-oil card */
+.card-nopalm {
+  left: 8%; top: 47%;
+  width: 22%; max-width: 130px;
+  aspect-ratio: 0.92;
+  background: #d23430; color: #fff;
+  padding: 4%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transform: rotate(-3deg);
+  animation-delay: 0.4s;
+  border-radius: 4px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+}
+.card-nopalm .no-x {
+  font-size: clamp(7px, 1.8vw, 11px);
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  align-self: flex-end;
+  margin-right: 6%;
+  line-height: 1;
+}
+.card-nopalm .no-x .no-icon { font-style: normal; font-size: 1.5em; }
+.card-nopalm .no-label {
+  font-size: clamp(13px, 3.4vw, 22px);
+  line-height: 1.15;
+  text-align: center;
+  margin-top: -7%;
+}
+.card-nopalm .no-label .fire { font-style: normal; font-size: 1.25em; }
+
+/* yellow description card */
+.card-desc {
+  left: -1%; top: 68%;
+  width: 21%; max-width: 120px;
+  background: #ffe05a; color: #2d2417;
+  padding: 5%;
+  aspect-ratio: 0.78;
+  font-size: clamp(10px, 2.5vw, 16px);
+  line-height: 1.35;
+  font-weight: 500;
+  text-align: center;
   transform: rotate(-2deg);
-  background: linear-gradient(160deg, #fff4e0, #ffdfb8 60%, #ffd2a1 100%);
-  color: #4a2c12;
-  border: 1.5px solid #fff;
+  animation-delay: 0.55s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
 }
-.board-review::after {
-  content: ''; position: absolute; left: 22%; bottom: -12px;
-  border: 12px solid transparent; border-top-color: #ffdfb8; border-bottom: none;
-  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.15));
-}
-.review-head { display: flex; gap: 9px; align-items: center; }
-.review-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: linear-gradient(140deg, var(--neon-purple-strong), var(--neon-pink));
-  display: grid; place-items: center; font-weight: 800; color: #fff; font-size: 13px;
-  flex: 0 0 34px;
-}
-.review-head strong { font-size: 12px; color: #3c2410; display: block; }
-.review-head .stars { margin-top: -2px; }
-.board-review p { font-size: 12.5px; font-weight: 600; }
 
-.board-calories {
-  width: max-content; max-width: 58vw;
-  top: -140px; right: -84px;
-  display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto;
-  column-gap: 8px; align-items: baseline;
-  transform: rotate(1.6deg);
-  background: linear-gradient(140deg, #4d94ff, var(--blue));
+/* purple thought bubble */
+.bubble-tagline {
+  left: 38%; top: 36%;
+  width: 34%; max-width: 210px;
+  aspect-ratio: 1.35;
+  background: #e7ccfb;
+  border: 2.5px solid #8a46d9;
+  border-radius: 48% 52% 55% 45% / 58% 55% 45% 42%;
+  color: #6b34c8;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 7% 6%;
+  transform: rotate(1deg);
+  animation-delay: 0.7s;
+  box-shadow: 0 8px 18px rgba(138, 70, 217, 0.25);
+}
+.bubble-tagline .bubble-text {
+  font-size: clamp(14px, 3.6vw, 24px);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+.bubble-tagline .bubble-review {
+  margin-top: 6%;
+  font-size: clamp(7.5px, 1.8vw, 10px);
+  color: #7a4bc0;
+  text-align: center;
+  line-height: 1.3;
+  font-style: italic;
+}
+
+/* tilted calories sign — red dome + blue body on a stick */
+.calorie-sign {
+  right: 1%; top: 15%;
+  width: 30%; max-width: 190px;
+  transform: rotate(7deg);
+  animation-delay: 0.85s;
+  z-index: 2;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.25));
+}
+.cal-sign-top {
+  background: linear-gradient(180deg, #f04b34, #c92c22);
   color: #fff;
-  border: 1.5px solid #cfe0ff;
+  border-radius: 46% 46% 0 0 / 80% 80% 0 0;
+  padding: 9% 6% 7%;
+  display: flex; align-items: center; justify-content: center; gap: 4%;
 }
-.calorie-icon { grid-row: span 2; font-size: 20px; align-self: center; }
-.calorie-value { font-size: 19px; font-weight: 800; }
-.calorie-unit { font-size: 10.5px; opacity: 0.85; font-weight: 600; }
+.cal-title {
+  font-family: 'Caprasimo', var(--font);
+  font-size: clamp(15px, 4.2vw, 30px);
+  transform: rotate(-2deg);
+}
+.cal-speedo { width: clamp(14px, 3.4vw, 24px); height: auto; flex: 0 0 auto; }
+.cal-sign-body {
+  background: linear-gradient(180deg, #2059c7, #1c4bab);
+  color: #fff;
+  border-radius: 0 0 10px 10px;
+  padding: 6% 8% 10%;
+  display: grid; grid-template-columns: auto 1fr; column-gap: 7%;
+  align-items: center;
+}
+.cal-kcal {
+  font-family: 'Caprasimo', var(--font);
+  font-size: clamp(22px, 6vw, 44px);
+  font-style: italic;
+}
+.cal-macros {
+  font-size: clamp(8.5px, 2.2vw, 14px);
+  line-height: 1.35;
+  text-align: center;
+  background: #fff;
+  color: #1c4bab;
+  padding: 4% 6%;
+  border-radius: 999px;
+  transform: rotate(-1deg);
+}
+.cal-stick {
+  width: 4.5%; max-width: 12px;
+  height: 24%;
+  background: #ce3b31;
+  margin: -1% auto 0;
+  border-radius: 3px;
+}
 
-.board-ingredients {
-  width: max-content; max-width: 66vw;
-  bottom: -190px; left: -60px;
-  background: linear-gradient(150deg, #0e2440f2, #1b4265ee);
-  border: 1.5px solid var(--neon-purple);
-  color: var(--cream); transform: rotate(-1.2deg);
+/* ingredients strip (bottom-left, subtle) */
+.ingredients-strip {
+  left: 22%; bottom: 16%;
+  display: flex; gap: 5px; flex-wrap: wrap; max-width: 52%;
+  animation-delay: 1s;
 }
-.ingredients-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--neon-purple); font-weight: 700; }
-.ingredients-chips { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
-.ingredient-chip {
-  font-size: 10px; padding: 4px 10px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.22);
-  white-space: nowrap; font-weight: 500;
+.ingredients-strip .ingredient-chip {
+  font-size: clamp(8px, 2vw, 11px);
+  padding: 3px 9px; border-radius: 999px;
+  background: rgba(253, 248, 236, 0.9); color: #22406b; font-weight: 600;
+  border: 1.5px solid rgba(18, 50, 81, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-.ingredient-chip em { font-style: normal; margin-right: 3px; }
+.ingredients-strip .ingredient-chip em { font-style: normal; margin-right: 3px; }
+.ingredients-strip .sample-note {
+  width: 100%;
+  font-size: clamp(7px, 1.7vw, 9.5px);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  text-align: left; margin-left: 4px;
+}
 
-.board-rating {
-  width: max-content;
-  bottom: -120px; right: -70px;
-  background: rgba(10, 28, 51, 0.85);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  display: flex; align-items: center; gap: 0;
-  backdrop-filter: blur(6px);
+/* small corner tags ("sample"/"estimate") */
+.card-tag {
+  position: absolute; top: -8px; right: 8px;
+  font-size: 8px; letter-spacing: 1px; text-transform: uppercase; font-weight: 800;
+  padding: 2px 6px; border-radius: 999px;
+  background: rgba(10, 28, 51, 0.9); color: #ffd76e;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.card-tag-dark {
+  background: #ffd76e; color: #4a2c12; border-color: rgba(74, 44, 18, 0.4);
+}
+
+/* food photo (demo-mode only; in AR the food is the three.js cutout) */
+.food-photo {
+  position: absolute; left: 12%; bottom: 10%;
+  width: 70%; aspect-ratio: 1.06;
+  background-size: cover; background-position: center;
+  border-radius: 12px;
+  animation: popIn 0.5s cubic-bezier(0.2, 1.4, 0.35, 1) 0.15s both;
+  z-index: 1;
+}
+.food-photo-shadow {
+  position: absolute; left: 6%; right: 6%; bottom: -7%;
+  height: 10%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(8, 16, 30, 0.45), transparent 70%);
+  filter: blur(2px);
+}
+
+/* mascot holder */
+.mascot-holder {
+  position: absolute; right: 0; bottom: 4%;
+  z-index: 4;
 }
 
 @keyframes popIn {
@@ -314,18 +477,24 @@ img { max-width: 100%; }
   color: rgba(255, 255, 255, 0.55); font-weight: 700;
 }
 
-/* mascot */
+/* mascot (bear) */
 .mascot {
-  position: absolute; right: 14px; bottom: calc(24px + var(--safe-bottom));
-  z-index: 25; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  position: relative; right: auto; bottom: auto;
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  width: max-content;
   animation: mascotIn 0.6s cubic-bezier(0.2, 1.5, 0.4, 1) 0.3s both;
 }
-.mascot-line {
-  font-size: 10.5px; font-weight: 700; color: #fff;
-  background: linear-gradient(100deg, var(--neon-pink), var(--neon-purple-strong));
-  padding: 5px 12px; border-radius: 999px;
-  box-shadow: 0 8px 18px rgba(255, 95, 162, 0.4);
-  animation: mascotTalk 2.6s ease-in-out infinite;
+.must-try {
+  font-size: clamp(12px, 3vw, 18px);
+  font-weight: 800;
+  font-style: italic;
+  color: #ffd9f2;
+  text-shadow:
+    0 0 6px rgba(138, 70, 217, 0.9),
+    0 1px 0 #1a5fae, 0 -1px 0 #1a5fae, 1px 0 0 #1a5fae, -1px 0 0 #1a5fae,
+    0 2px 0 #1a5fae;
+  transform: rotate(-6deg);
+  animation: mascotTalk 2s ease-in-out infinite;
 }
 .mascot-cheer svg { animation: mascotJump 1s ease-in-out infinite; transform-origin: 50% 90%; }
 .mascot-arm, .mascot-cheer .mascot-arm { transform-origin: 18px 38px; }
@@ -417,15 +586,15 @@ img { max-width: 100%; }
     radial-gradient(120% 60% at 50% 0%, rgba(168, 85, 247, 0.22), transparent 60%),
     linear-gradient(180deg, var(--navy-800), var(--navy-900));
   overflow-y: auto;
-  padding: 74px 12px calc(20px + var(--safe-bottom));
-  display: flex; flex-direction: column; gap: 8px;
+  padding: 0 8px calc(28px + var(--safe-bottom));
 }
 .dish-sheet-demo .boards-anchor {
-  position: relative; width: 100%; max-width: 500px; margin: 0 auto;
-  width: 100%; height: auto;
+  position: relative; left: auto; top: auto;
+  transform: none;
+  transform: none;
+  display: grid; place-items: center;
+  padding-top: 46px;
 }
-.dish-sheet-demo .board { position: relative; margin: 12px auto; top: auto; left: auto; right: auto; bottom: auto; width: min(300px, 84vw); transform: none; }
-.dish-sheet-demo .mascot { position: relative; right: auto; bottom: auto; margin: 14px auto; }
 
 /* small screens */
 @media (max-width: 360px) {
@@ -437,5 +606,5 @@ img { max-width: 100%; }
   .welcome-photo { height: 60vh; }
   .board-review { top: -110px; left: -140px; }
   .board-calories { top: -110px; right: -140px; }
-  .mascot { right: 24px; bottom: 12px; }
+  .mascot-holder { right: 0; bottom: 6%; }
 }

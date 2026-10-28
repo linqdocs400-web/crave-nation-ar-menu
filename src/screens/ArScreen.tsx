@@ -143,8 +143,13 @@ export function ArScreen({ onExit, onFallback }: { onExit: () => void; onFallbac
       if (p) {
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
-        const x = Math.max(110, Math.min(rect.width - 110, p.x));
-        const y = Math.max(150, Math.min(rect.height - 170, p.y));
+        // keep the whole promo composition (title above, cards around, mascot
+        // below) inside the viewport: comp is ~min(92vw,540px) wide with a
+        // 0.98 aspect, anchored so the food sits roughly mid-composition.
+        const compW = Math.min(rect.width * 0.92, 540);
+        const compH = compW / 0.98;
+        const x = Math.max(compW / 2, Math.min(rect.width - compW / 2, p.x));
+        const y = Math.max(compH * 0.46 + 6, Math.min(rect.height - compH * 0.55, p.y));
         setAnchor({ x, y });
       }
     }, 90);

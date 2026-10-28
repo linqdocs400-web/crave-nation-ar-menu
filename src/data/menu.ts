@@ -51,6 +51,18 @@ export interface Dish {
   };
   /** unverified sample estimate, kcal per printed serving */
   caloriesEstimate: number;
+  /** unverified sample macro estimate shown on the calorie sign */
+  calories: { kcal: number; carbs: number; fat: number };
+  /** red "No 🚫 palm oil" card (sample claim until the restaurant confirms) */
+  noPalmOil?: boolean;
+  /** short one-line description for the yellow card */
+  shortDesc: string;
+  /** purple thought-bubble tagline */
+  tagline: string;
+  /** the blue card, top-left */
+  serves: string;
+  /** always-on "Must try!" badge with the bear (all demo dishes) */
+  mustTry?: boolean;
   /** editable sample ingredients until recipes are confirmed */
   ingredients: { icon: string; label: string }[];
   reviews: DemoReview[];
@@ -95,6 +107,12 @@ export const DISHES: Dish[] = [
     region: chickenCell(3),
     crop: { image: 'nuggets', x: 0.085, y: 0.16, w: 0.44, h: 0.64 },
     caloriesEstimate: 280,
+    calories: { kcal: 450, carbs: 45, fat: 22 },
+    noPalmOil: true,
+    shortDesc: 'Tenderly cooked chicken',
+    tagline: 'crispy and delicious',
+    serves: 'Serves 2',
+    mustTry: true,
     ingredients: [
       { icon: '🍗', label: 'Chicken breast (sample)' },
       { icon: '🍞', label: 'Crispy breadcrumbs (sample)' },
@@ -117,6 +135,12 @@ export const DISHES: Dish[] = [
     region: chickenCell(0),
     crop: { image: 'menu', x: 0.036, y: 0.252, w: 0.185, h: 0.085 },
     caloriesEstimate: 260,
+    calories: { kcal: 320, carbs: 30, fat: 14 },
+    noPalmOil: true,
+    shortDesc: 'Juicy strips, golden crust',
+    tagline: 'juicy and crunchy',
+    serves: 'Serves 2',
+    mustTry: true,
     ingredients: [
       { icon: '🍗', label: 'Chicken strips (sample)' },
       { icon: '🥛', label: 'Buttermilk marinade (sample)' },
@@ -138,6 +162,12 @@ export const DISHES: Dish[] = [
     region: chickenCell(1),
     crop: { image: 'menu', x: 0.272, y: 0.252, w: 0.185, h: 0.085 },
     caloriesEstimate: 240,
+    calories: { kcal: 290, carbs: 28, fat: 15 },
+    noPalmOil: true,
+    shortDesc: 'Bite-sized crispy chicken',
+    tagline: 'pop-ably delicious',
+    serves: 'Serves 1',
+    mustTry: true,
     ingredients: [
       { icon: '🍗', label: 'Diced chicken (sample)' },
       { icon: '🌶️', label: 'Peri spice mix (sample)' },
@@ -158,6 +188,12 @@ export const DISHES: Dish[] = [
     region: vegCell(0),
     crop: { image: 'menu', x: 0.04, y: 0.634, w: 0.17, h: 0.058 },
     caloriesEstimate: 200,
+    calories: { kcal: 310, carbs: 48, fat: 11 },
+    noPalmOil: true,
+    shortDesc: 'Classic salted golden fries',
+    tagline: 'golden and crispy',
+    serves: 'Serves 1',
+    mustTry: true,
     ingredients: [
       { icon: '🥔', label: 'Crisp fries (sample)' },
       { icon: '🧂', label: 'Classic salt (sample)' },
@@ -178,6 +214,12 @@ export const DISHES: Dish[] = [
     region: vegCell(2),
     crop: { image: 'menu', x: 0.47, y: 0.634, w: 0.17, h: 0.058 },
     caloriesEstimate: 190,
+    calories: { kcal: 250, carbs: 36, fat: 9 },
+    noPalmOil: true,
+    shortDesc: 'Veggie-packed crispy bites',
+    tagline: 'crunchy veggie bites',
+    serves: 'Serves 1',
+    mustTry: true,
     ingredients: [
       { icon: '🥬', label: 'Veggie mix (sample)' },
       { icon: '🍞', label: 'Crumb coating (sample)' },
@@ -198,6 +240,11 @@ export const DISHES: Dish[] = [
     region: { x: 0.644, y: 0.222, w: 0.34, h: 0.062 },
     crop: { image: 'menu', x: 0.72, y: 0.234, w: 0.24, h: 0.062 },
     caloriesEstimate: 310,
+    calories: { kcal: 380, carbs: 42, fat: 16 },
+    shortDesc: 'Grilled chicken, soft tortilla',
+    tagline: 'wrapped with love',
+    serves: 'Serves 1',
+    mustTry: true,
     ingredients: [
       { icon: '🌯', label: 'Soft tortilla (sample)' },
       { icon: '🍗', label: 'Grilled chicken (sample)' },
@@ -218,6 +265,11 @@ export const DISHES: Dish[] = [
     region: { x: 0.028, y: 0.872, w: 0.225, h: 0.125 },
     crop: { image: 'menu', x: 0.05, y: 0.862, w: 0.17, h: 0.07 },
     caloriesEstimate: 120,
+    calories: { kcal: 120, carbs: 30, fat: 0 },
+    shortDesc: 'Mango pulp, mint, fizzy soda',
+    tagline: 'sweet with a zing',
+    serves: 'Serves 1',
+    mustTry: false,
     ingredients: [
       { icon: '🥭', label: 'Mango syrup (sample)' },
       { icon: '🌱', label: 'Fresh mint (sample)' },
