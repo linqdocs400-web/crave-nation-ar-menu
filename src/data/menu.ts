@@ -43,7 +43,7 @@ export interface Dish {
   /** crop of the supplied photography used for the AR visual */
   crop?: {
     /** source image, defaults to the chicken nuggets photo */
-    image: 'nuggets' | 'menu';
+    image: 'nuggets' | 'menu' | 'wrap';
     x: number;
     y: number;
     w: number;
@@ -238,7 +238,7 @@ export const DISHES: Dish[] = [
     category: 'Wraps',
     priceLabel: '₹130 (as printed)',
     region: { x: 0.644, y: 0.222, w: 0.34, h: 0.062 },
-    crop: { image: 'menu', x: 0.72, y: 0.234, w: 0.24, h: 0.062 },
+    crop: { image: 'wrap', x: 0.05, y: 0.16, w: 0.62, h: 0.68 },
     caloriesEstimate: 310,
     calories: { kcal: 380, carbs: 42, fat: 16 },
     shortDesc: 'Grilled chicken, soft tortilla',
@@ -343,5 +343,6 @@ export const IMAGE_PATHS = {
   cafeNight: '/images/cafe-night.jpg',
   cafeDay: '/images/cafe-day.jpg',
   nuggets: '/images/nuggets-fries-dips.jpg',
+  wrap: '/images/chicken-wrap.jpg',
   target: '/targets/menu.mind',
 };

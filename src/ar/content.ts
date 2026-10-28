@@ -16,6 +16,7 @@ import type { Dish } from '../data/menu';
 const CROP_SOURCE: Record<string, string> = {
   nuggets: '/images/nuggets-fries-dips.jpg',
   menu: '/images/menu.jpg',
+  wrap: '/images/chicken-wrap.jpg',
 };
 
 const texCache = new Map<string, Promise<THREE.Texture>>();

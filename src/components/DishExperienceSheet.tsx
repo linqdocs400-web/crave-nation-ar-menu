@@ -35,7 +35,12 @@ export function DishExperienceSheet({
   // CSS crop of the dish photo (menu.jpg or the nuggets photo) for demo mode
   let foodStyle: React.CSSProperties | undefined;
   if (!arActive && dish.crop) {
-    const url = dish.crop.image === 'nuggets' ? IMAGE_PATHS.nuggets : IMAGE_PATHS.menu;
+    const url =
+      dish.crop.image === 'nuggets'
+        ? IMAGE_PATHS.nuggets
+        : dish.crop.image === 'wrap'
+          ? IMAGE_PATHS.wrap
+          : IMAGE_PATHS.menu;
     const { x, y, w, h } = dish.crop;
     foodStyle = {
       backgroundImage: `url(${url})`,
