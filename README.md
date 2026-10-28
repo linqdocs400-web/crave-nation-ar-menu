@@ -39,7 +39,10 @@ src/
   screens/DemoModeView.tsx     non-AR fallback (no camera / missing tracking target)
   components/
     DishExperienceSheet.tsx    name+price bar, boards container, mascot
-    Boards.tsx                 review bubble, calorie card, ingredients, stars
+    Boards.tsx                 promo-style info cards: bubble-letter title, serves /
+                               no-palm-oil / description cards, thought-bubble tagline
+                               with cycling sample review, tilted calorie sign, sample
+                               ingredients strip, "Must try!" bear mascot
     Mascot.tsx                 cheering fry-box mascot (SVG + CSS keyframes)
   ar/
     arSession.ts               MindARthree lifecycle, ghost preview, flip calibration,
