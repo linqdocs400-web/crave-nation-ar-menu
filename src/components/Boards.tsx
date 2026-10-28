@@ -23,12 +23,11 @@ export function ServesCard({ dish }: { dish: Dish }) {
     <div className="boardx card-serves">
       <span className="fact-big">{dish.serves}</span>
       <span className="fact-icons">👦👧</span>
-      <span className="card-tag">sample</span>
     </div>
   );
 }
 
-/** Red card: no-palm-oil claim (sample until confirmed). */
+/** Red card: no-palm-oil claim. */
 export function NoPalmOilCard({ dish }: { dish: Dish }) {
   if (!dish.noPalmOil) return null;
   return (
@@ -41,7 +40,6 @@ export function NoPalmOilCard({ dish }: { dish: Dish }) {
         <br />
         oil
       </span>
-      <span className="card-tag">sample</span>
     </div>
   );
 }
@@ -51,26 +49,25 @@ export function DescriptionCard({ dish }: { dish: Dish }) {
   return (
     <div className="boardx card-desc">
       {dish.shortDesc}
-      <span className="card-tag card-tag-dark">sample</span>
     </div>
   );
 }
 
-/** Purple thought bubble with the tagline + demo star rating. */
+/** Purple thought bubble with the tagline + proof snippet. */
 export function TaglineBubble({ dish, review }: { dish: Dish; review?: DemoReview }) {
   return (
     <div className="boardx bubble-tagline">
       <span className="bubble-text">{dish.tagline}</span>
       {review && (
         <span className="bubble-review">
-          “{review.text}” ★{review.stars}/5 — {review.name.replace('Demo ', '')} · demo
+          “{review.text}” ★{review.stars}/5 — {review.name.replace('Demo ', '')}
         </span>
       )}
     </div>
   );
 }
 
-/** Tilted red/blue "Calories 450" sign planted on a red stick. */
+/** Tilted red/blue "Calories" sign planted on a red stick. */
 export function CalorieSign({ dish }: { dish: Dish }) {
   return (
     <div className="boardx calorie-sign">
@@ -91,12 +88,11 @@ export function CalorieSign({ dish }: { dish: Dish }) {
         </span>
       </div>
       <div className="cal-stick" />
-      <span className="card-tag card-tag-dark">estimate</span>
     </div>
   );
 }
 
-/** Small ingredients chip row (kept from the earlier prototype; sample data). */
+/** Small ingredients chip row. */
 export function IngredientsStrip({ dish }: { dish: Dish }) {
   return (
     <div className="boardx ingredients-strip">
@@ -105,7 +101,6 @@ export function IngredientsStrip({ dish }: { dish: Dish }) {
           <em>{ing.icon}</em> {ing.label.replace(' (sample)', '')}
         </span>
       ))}
-      <span className="sample-note">sample ingredients</span>
     </div>
   );
 }

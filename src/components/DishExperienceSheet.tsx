@@ -76,11 +76,6 @@ export function DishExperienceSheet({
           </div>
         </div>
       </div>
-
-      <span className="prototype-tag">
-        Crave Nation · AR prototype — serves/description/palm-oil tags, calories & reviews are sample
-        content; prices as printed on the supplied menu
-      </span>
     </div>
   );
 }

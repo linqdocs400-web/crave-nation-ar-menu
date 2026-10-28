@@ -175,32 +175,37 @@ export class DishExperience {
     if (tex) {
       const img = tex.image as { width: number; height: number };
       const aspect = img.width / img.height;
-      const w = featured ? 0.34 : 0.22;
+      // Big and unmissable: ~62% of the tracked menu width for the featured
+      // dish, ~44% for the placeholder dishes.
+      const w = featured ? 0.62 : 0.44;
       const h = w / aspect;
       const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false });
       this.foodMesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
     } else {
       // pure fallback: soft cream disc
       this.foodMesh = new THREE.Mesh(
-        new THREE.CircleGeometry(0.1, 32),
+        new THREE.CircleGeometry(0.2, 32),
         new THREE.MeshBasicMaterial({ color: 0xf5efe2, transparent: true, opacity: 0.95, depthWrite: false })
       );
     }
-    this.foodMesh.position.z = 0.10;
+    this.foodMesh.position.z = 0.12;
+    this.foodMesh.renderOrder = 10; // food always draws above shadow
     this.content.add(this.foodMesh);
 
     this.shadowMesh = new THREE.Mesh(
       new THREE.PlaneGeometry(1, 1),
       new THREE.MeshBasicMaterial({ map: makeShadowTexture(), transparent: true, depthWrite: false })
     );
-    this.shadowScale = featured ? { x: 0.6, y: 0.45 } : { x: 0.34, y: 0.26 };
+    this.shadowScale = featured ? { x: 0.95, y: 0.6 } : { x: 0.62, y: 0.42 };
     this.shadowMesh.scale.set(this.shadowScale.x, this.shadowScale.y, 1);
     this.shadow.add(this.shadowMesh);
 
     this.nameSprite = makeNameSprite(dish.name);
-    const labelW = featured ? 0.36 : 0.26;
+    const labelW = featured ? 0.52 : 0.4;
     this.nameSprite.scale.set(labelW, (labelW * 120) / 512, 1);
-    this.nameSprite.position.set(0, featured ? -0.15 : -0.16, 0.1);
+    const hLabel = this.foodMesh.geometry as THREE.PlaneGeometry;
+    const halfH = ((hLabel.parameters?.height) ?? 0.3) / 2;
+    this.nameSprite.position.set(0, -halfH - 0.075, 0.12);
     this.content.add(this.nameSprite);
 
     this.content.visible = true;

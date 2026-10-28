@@ -202,17 +202,18 @@ img { max-width: 100%; }
   backdrop-filter: blur(6px); font-size: 15px;
 }
 .price-chip {
-  position: absolute; top: 15%; left: 54%; z-index: 2;
+  position: absolute; top: 17.5%; left: 50%; z-index: 3;
   font-size: clamp(11px, 3vw, 14px); font-weight: 800; color: #8a46d9;
   background: #ffe9a8; padding: 3px 12px; border-radius: 999px;
   border: 2px solid #8a46d9; transform: rotate(-2deg);
   animation: popIn 0.4s 0.5s both;
+  white-space: nowrap;
 }
 
 .boards-anchor { position: absolute; transform: translate(-50%, -46%); }
 .dishboard-comp {
   position: relative;
-  width: min(92vw, 540px);
+  width: min(94vw, 560px);
   aspect-ratio: 0.98;
   font-family: var(--font);
 }
@@ -254,10 +255,10 @@ img { max-width: 100%; }
   50% { translate: 0 -4px; }
 }
 
-/* blue serves card */
+/* blue serves card (left column) */
 .card-serves {
   left: 0; top: 22%;
-  width: 27%; max-width: 150px;
+  width: 24%; max-width: 150px;
   background: #1656b8; color: #fff;
   padding: 10% 3% 16%;
   aspect-ratio: 1.55;
@@ -272,10 +273,10 @@ img { max-width: 100%; }
 }
 .card-serves .fact-icons { font-size: clamp(11px, 2.6vw, 17px); }
 
-/* red no-palm-oil card */
+/* red no-palm-oil card (left column) */
 .card-nopalm {
-  left: 8%; top: 47%;
-  width: 22%; max-width: 130px;
+  left: 5%; top: 43%;
+  width: 20.5%; max-width: 130px;
   aspect-ratio: 0.92;
   background: #d23430; color: #fff;
   padding: 4%;
@@ -302,13 +303,13 @@ img { max-width: 100%; }
 }
 .card-nopalm .no-label .fire { font-style: normal; font-size: 1.25em; }
 
-/* yellow description card */
+/* yellow description card (left column) */
 .card-desc {
-  left: -1%; top: 68%;
-  width: 21%; max-width: 120px;
+  left: 0; top: 66%;
+  width: 22%; max-width: 125px;
+  aspect-ratio: 0.78;
   background: #ffe05a; color: #2d2417;
   padding: 5%;
-  aspect-ratio: 0.78;
   font-size: clamp(10px, 2.5vw, 16px);
   line-height: 1.35;
   font-weight: 500;
@@ -319,10 +320,10 @@ img { max-width: 100%; }
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
 }
 
-/* purple thought bubble */
+/* purple thought bubble (right column, top) */
 .bubble-tagline {
-  left: 38%; top: 36%;
-  width: 34%; max-width: 210px;
+  right: 0; top: 19%;
+  width: 32%; max-width: 215px;
   aspect-ratio: 1.35;
   background: #e7ccfb;
   border: 2.5px solid #8a46d9;
@@ -349,10 +350,10 @@ img { max-width: 100%; }
   font-style: italic;
 }
 
-/* tilted calories sign — red dome + blue body on a stick */
+/* tilted calories sign (right column) */
 .calorie-sign {
-  right: 1%; top: 15%;
-  width: 30%; max-width: 190px;
+  right: 0; top: 43%;
+  width: 27%; max-width: 175px;
   transform: rotate(7deg);
   animation-delay: 0.85s;
   z-index: 2;
@@ -402,52 +403,35 @@ img { max-width: 100%; }
   border-radius: 3px;
 }
 
-/* ingredients strip (bottom-left, subtle) */
+/* ingredients chips (right column, below the calorie sign) */
 .ingredients-strip {
-  left: 22%; bottom: 16%;
-  display: flex; gap: 5px; flex-wrap: wrap; max-width: 52%;
+  right: 1%; top: 79%;
+  display: flex; gap: 5px; flex-wrap: wrap; max-width: 30%;
   animation-delay: 1s;
+  z-index: 3;
 }
 .ingredients-strip .ingredient-chip {
   font-size: clamp(8px, 2vw, 11px);
   padding: 3px 9px; border-radius: 999px;
-  background: rgba(253, 248, 236, 0.9); color: #22406b; font-weight: 600;
+  background: rgba(253, 248, 236, 0.92); color: #22406b; font-weight: 600;
   border: 1.5px solid rgba(18, 50, 81, 0.35);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 .ingredients-strip .ingredient-chip em { font-style: normal; margin-right: 3px; }
-.ingredients-strip .sample-note {
-  width: 100%;
-  font-size: clamp(7px, 1.7vw, 9.5px);
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-  text-align: left; margin-left: 4px;
-}
 
-/* small corner tags ("sample"/"estimate") */
-.card-tag {
-  position: absolute; top: -8px; right: 8px;
-  font-size: 8px; letter-spacing: 1px; text-transform: uppercase; font-weight: 800;
-  padding: 2px 6px; border-radius: 999px;
-  background: rgba(10, 28, 51, 0.9); color: #ffd76e;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-.card-tag-dark {
-  background: #ffd76e; color: #4a2c12; border-color: rgba(74, 44, 18, 0.4);
-}
-
-/* food photo (demo-mode only; in AR the food is the three.js cutout) */
+/* food photo (demo-mode only; in AR the food is the three.js cutout) —
+   sized big and placed center so the surrounding cards never cover it */
 .food-photo {
-  position: absolute; left: 12%; bottom: 10%;
-  width: 70%; aspect-ratio: 1.06;
+  position: absolute; left: 27%; bottom: 7%;
+  width: 45%; aspect-ratio: 1.06;
   background-size: cover; background-position: center;
   border-radius: 12px;
   animation: popIn 0.5s cubic-bezier(0.2, 1.4, 0.35, 1) 0.15s both;
-  z-index: 1;
+  z-index: 2;
 }
 .food-photo-shadow {
-  position: absolute; left: 6%; right: 6%; bottom: -7%;
-  height: 10%;
+  position: absolute; left: 6%; right: 6%; bottom: -6%;
+  height: 9%;
   background: radial-gradient(50% 50% at 50% 50%, rgba(8, 16, 30, 0.45), transparent 70%);
   filter: blur(2px);
 }

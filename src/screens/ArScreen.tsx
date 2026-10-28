@@ -120,7 +120,7 @@ export function ArScreen({ onExit, onFallback }: { onExit: () => void; onFallbac
     dishRef.current = d;
     setDish(d);
     void content.show(d).then(() => {
-      content.anchorAt({ x: local.x, y: local.y, z: 0.1 });
+      content.anchorAt({ x: local.x, y: local.y, z: 0.16 });
     });
   }, []);
 
