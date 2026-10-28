@@ -2,13 +2,20 @@ import { useEffect, useState } from 'react';
 import type { Dish, DemoReview } from '../data/menu';
 
 /**
- * Info-card set for the AR dish display, styled after the Crave Nation
- * promo layout: big bubble-letter title, small coloured fact cards around
- * the food, a tilted calories sign, a thought-bubble tagline and a
- * "Must try!" bear.
+ * Info-card set for the AR dish display, styled after premium AR-menu
+ * demos (KIVICUBE-like): retro script title, red "cloud" review bubble
+ * with avatar, marquee-style calorie sign, ingredient stamps and a row
+ * of gold stars.
  */
 
-/** Big playful purple title with dark outline (bubble-letter look). */
+const RETRO_PALETTE = {
+  red: '#e8442e',
+  blue: '#1e4fa1',
+  gold: '#f6b93d',
+  navy: '#1d3a6e',
+};
+
+/** Retro script title with navy outline (like a diner sign). */
 export function TitleBubble({ dish }: { dish: Dish }) {
   return (
     <div className="boardx title-bubble">
@@ -17,74 +24,52 @@ export function TitleBubble({ dish }: { dish: Dish }) {
   );
 }
 
-/** Blue card, top-left: serving size. */
-export function ServesCard({ dish }: { dish: Dish }) {
+/** Red cloud-shaped review bubble with avatar + big quote marks. */
+export function ReviewCloud({ review }: { review: DemoReview }) {
   return (
-    <div className="boardx card-serves">
-      <span className="fact-big">{dish.serves}</span>
-      <span className="fact-icons">👦👧</span>
-    </div>
-  );
-}
-
-/** Red card: no-palm-oil claim. */
-export function NoPalmOilCard({ dish }: { dish: Dish }) {
-  if (!dish.noPalmOil) return null;
-  return (
-    <div className="boardx card-nopalm">
-      <span className="no-x">
-        No <em className="no-icon">🚫</em>
+    <div className="boardx review-cloud">
+      <span className="cloud-avatar" aria-hidden="true">
+        {review.name.replace('Demo ', '').slice(0, 1)}
       </span>
-      <span className="no-label">
-        palm <em className="fire">🔥</em>
-        <br />
-        oil
-      </span>
+      <span className="cloud-quote cloud-quote-open">“</span>
+      <p className="cloud-text">{review.text}</p>
+      <span className="cloud-quote cloud-quote-close">”</span>
+      <span className="cloud-meta">★ {review.stars}/5</span>
     </div>
   );
 }
 
-/** Yellow card: one-line description. */
-export function DescriptionCard({ dish }: { dish: Dish }) {
+/** Torn-stamp ingredient stickers. */
+export function IngredientStamps({ dish }: { dish: Dish }) {
   return (
-    <div className="boardx card-desc">
-      {dish.shortDesc}
-    </div>
-  );
-}
-
-/** Purple thought bubble with the tagline + proof snippet. */
-export function TaglineBubble({ dish, review }: { dish: Dish; review?: DemoReview }) {
-  return (
-    <div className="boardx bubble-tagline">
-      <span className="bubble-text">{dish.tagline}</span>
-      {review && (
-        <span className="bubble-review">
-          “{review.text}” ★{review.stars}/5 — {review.name.replace('Demo ', '')}
+    <div className="boardx ingredient-stamps">
+      {dish.ingredients.slice(0, 3).map((ing, i) => (
+        <span key={ing.label} className="stamp" data-tilt={i % 2}>
+          <span className="stamp-label">{ing.label.replace(' (sample)', '')}</span>
+          <span className="stamp-icon">{ing.icon}</span>
         </span>
-      )}
+      ))}
     </div>
   );
 }
 
-/** Tilted red/blue "Calories" sign planted on a red stick. */
+/** Marquee-style calorie sign: gold script on red dome, big gold number. */
 export function CalorieSign({ dish }: { dish: Dish }) {
   return (
     <div className="boardx calorie-sign">
-      <div className="cal-sign-top">
-        <svg className="cal-speedo" viewBox="0 0 24 24" width="1em" height="1em">
-          <path d="M12 4a9 9 0 0 1 9 9 8.9 8.9 0 0 1-1.2 4.5H4.2A8.9 8.9 0 0 1 3 13a9 9 0 0 1 9-9z" fill="none" stroke="#fff" strokeWidth="2" />
-          <path d="M12 13l4-4.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-          <circle cx="12" cy="13.5" r="1.6" fill="#fff" />
+      <div className="cal-dome">
+        <svg className="cal-gauge" viewBox="0 0 60 34">
+          <path d="M6 30a24 24 0 0 1 48 0" fill="none" stroke={RETRO_PALETTE.gold} strokeWidth="5" strokeLinecap="round" />
+          <path d="M30 27 42 15" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" />
+          <circle cx="30" cy="28" r="3.2" fill="#fff" />
         </svg>
         <span className="cal-title">Calories</span>
       </div>
-      <div className="cal-sign-body">
+      <div className="cal-body">
         <span className="cal-kcal">{dish.calories.kcal}</span>
         <span className="cal-macros">
-          {dish.calories.carbs}grams Carbs
-          <br />
-          {dish.calories.fat}grams fat
+          <span>{dish.calories.carbs}g carbs</span>
+          <span>{dish.calories.fat}g fat</span>
         </span>
       </div>
       <div className="cal-stick" />
@@ -92,14 +77,16 @@ export function CalorieSign({ dish }: { dish: Dish }) {
   );
 }
 
-/** Small ingredients chip row. */
-export function IngredientsStrip({ dish }: { dish: Dish }) {
+/** Row of gold stars (average of the dish's sample reviews). */
+export function StarsRow({ dish }: { dish: Dish }) {
+  const avg = dish.reviews.reduce((s, r) => s + r.stars, 0) / dish.reviews.length;
+  const full = Math.round(avg);
   return (
-    <div className="boardx ingredients-strip">
-      {dish.ingredients.slice(0, 3).map((ing) => (
-        <span key={ing.label} className="ingredient-chip">
-          <em>{ing.icon}</em> {ing.label.replace(' (sample)', '')}
-        </span>
+    <div className="boardx stars-row" aria-label={`${avg.toFixed(1)} out of 5`}>
+      {Array.from({ length: full }, (_, i) => (
+        <svg key={i} viewBox="0 0 24 24" className="star">
+          <path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill={RETRO_PALETTE.gold} stroke={RETRO_PALETTE.navy} strokeWidth="1.2" />
+        </svg>
       ))}
     </div>
   );

@@ -1,21 +1,19 @@
 import type { Dish } from '../data/menu';
 import {
   TitleBubble,
-  ServesCard,
-  NoPalmOilCard,
-  DescriptionCard,
-  TaglineBubble,
+  ReviewCloud,
+  IngredientStamps,
   CalorieSign,
-  IngredientsStrip,
+  StarsRow,
   useReviewCycler,
 } from './Boards';
 import { Mascot } from './Mascot';
 import { IMAGE_PATHS } from '../data/menu';
 
 /**
- * The dish info display, styled after the Crave Nation promo artwork:
- * bubble-letter title up top, sample fact cards around the food, tilted
- * calorie sign and a "Must try!" bear. In AR mode the food is rendered by
+ * The dish info display, styled after premium AR-menu demos: retro script
+ * title, red cloud review bubble, marquee calorie sign, ingredient stamps,
+ * gold stars and the "Must try!" bear. In AR mode the food is rendered by
  * three.js anchored at `boardAnchor`; the HTML composition surrounds it.
  * In demo mode the food photo is drawn from the dish crop with CSS.
  */
@@ -65,12 +63,10 @@ export function DishExperienceSheet({
             </div>
           )}
           <span className="price-chip">{dish.priceLabel}</span>
-          <ServesCard dish={dish} />
-          <NoPalmOilCard dish={dish} />
-          <DescriptionCard dish={dish} />
-          <TaglineBubble dish={dish} review={review} />
+          <ReviewCloud review={review} />
           <CalorieSign dish={dish} />
-          <IngredientsStrip dish={dish} />
+          <IngredientStamps dish={dish} />
+          <StarsRow dish={dish} />
           <div className="mascot-holder">
             <Mascot celebrating={arActive} />
           </div>
